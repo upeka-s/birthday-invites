@@ -1,0 +1,26 @@
+{
+  "name": "Sophie",
+  "theme": "Spy Mission",
+  "puzzles": [
+    {
+      "question": "Find the secret word among DRAGON, CAKE, SECRET",
+      "options": ["DRAGON", "CAKE", "SECRET"],
+      "correct": "DRAGON",
+      "successMessage": "Access Granted! Mission Accepted!",
+      "failMessage": "Oops! Try Again."
+    },
+    {
+      "question": "Choose your spy gadget to enter the secret lab",
+      "options": ["Magnifying Glass", "Laser Pen", "Invisible Cloak"],
+      "correct": "Invisible Cloak",
+      "successMessage": "Gadget Ready! You're a true spy!",
+      "failMessage": "Wrong gadget! Try Again."
+    }
+  ],
+  "partyDetails": {
+    "date": "12 July 2026",
+    "time": "3 PM",
+    "location": "123 Secret Lane",
+    "rsvp": "Please RSVP via link!"
+  }
+}
