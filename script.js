@@ -52,3 +52,7 @@ function checkAnswer(answer) {
     feedbackEl.innerText = puzzle.failMessage;
   }
 }
+
+function doGet() {
+  return ContentService.createTextOutput("Your RSVP backend is live and waiting for data!");
+}
