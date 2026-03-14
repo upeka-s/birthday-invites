@@ -24,6 +24,34 @@
   </div>
 </div>
 
-<script src="script.js"></script>
+<script src="script.js"><script>
+  // 1. Paste your URL here at the very top of the script section
+  const webAppUrl = "https://script.google.com/macros/s/XXXXX/exec"; 
+
+  // 2. This function captures the form data and sends it
+  async function handleRSVP(event) {
+    event.preventDefault(); // Prevents the page from refreshing
+    
+    const name = document.getElementById('guestName').value;
+    const status = document.getElementById('attendanceStatus').value;
+
+    const data = {
+      name: name,
+      attendance: status,
+      guests: 1
+    };
+
+    // 3. The "Postman" that delivers the data to Google
+    fetch(webAppUrl, {
+      method: "POST",
+      mode: "no-cors",
+      cache: "no-cache",
+      body: JSON.stringify(data)
+    });
+
+    alert("Thanks " + name + "! Your RSVP is recorded.");
+    document.getElementById('rsvpForm').reset(); // Clears the form
+  }
+</script></script>
 </body>
 </html>
