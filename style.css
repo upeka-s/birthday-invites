@@ -1,22 +1,53 @@
-body {
-  font-family: 'Comic Sans MS', sans-serif;
-  background: linear-gradient(to bottom, #f0f8ff, #a0d8f1);
-  text-align: center;
-  padding: 20px;
+:root {
+  --primary-gold: #D4AF37; /* Or a trendy Sage Green: #B2AC88 */
+  --bg-color: #FAFAFA;
+  --text-main: #2D2D2D;
 }
 
-.hidden { display: none; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Playfair Display', serif; /* Use a Google Font for luxury */
+  background-color: var(--bg-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+#invite-card {
+  width: 90%;
+  max-width: 400px;
+  background: white;
+  padding: 40px 20px;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+  text-align: center;
+  border: 1px solid #eee;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px; /* Prevents iPhone "auto-zoom" on focus */
+}
 
 button {
-  background-color: #ffcc00;
-  padding: 10px 20px;
+  width: 100%;
+  padding: 15px;
+  background-color: var(--primary-gold);
+  color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  letter-spacing: 1px;
   cursor: pointer;
-  font-size: 16px;
-  margin: 5px;
+  transition: transform 0.2s;
 }
 
-button:hover {
-  background-color: #ffdd33;
+button:active {
+  transform: scale(0.98); /* Tactile feel when pressed */
 }
