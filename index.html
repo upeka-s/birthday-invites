@@ -15,6 +15,27 @@
     <p>Time: <span id="time"></span></p>
     <p>Location: <span id="location"></span></p>
     <p>RSVP: <span id="rsvp"></span></p>
+
+    <div id="rsvp-container" style="padding: 20px; text-align: center;">
+    <h2>RSVP</h2>
+    <p>Please let us know if you can make it!</p>
+    
+    <form id="rsvpForm">
+        <input type="text" id="guestName" placeholder="Your Full Name" required 
+               style="display: block; width: 80%; margin: 10px auto; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+        
+        <select id="attendanceStatus" 
+                style="display: block; width: 80%; margin: 10px auto; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <option value="Yes">Yes, I'll be there! 🎉</option>
+            <option value="No">Sorry, I can't make it 😢</option>
+        </select>
+
+        <button type="submit" 
+                style="background-color: #ff4757; color: white; padding: 10px 30px; border: none; border-radius: 25px; cursor: pointer; font-size: 18px;">
+            Confirm RSVP
+        </button>
+    </form>
+</div>
   </div>
   <button id="startBtn">Start Mission 🎮</button>
   <div id="game" class="hidden">
@@ -25,13 +46,15 @@
 </div>
 
 <script src="script.js"><script>
-  // 1. Paste your URL here at the very top of the script section
-  const webAppUrl = "https://script.google.com/macros/s/XXXXX/exec"; 
+  <script>
+  // Replace this with your actual Google Script URL
+  const webAppUrl = "https://script.google.com/macros/s/AKfycbxe3ujmumWKw_EVn4RykFffjnBPmp-XFFsA5C4NoMQO8E_S_dDN2SBgGpUakn2kMm-Qlg/exec"; 
 
-  // 2. This function captures the form data and sends it
-  async function handleRSVP(event) {
-    event.preventDefault(); // Prevents the page from refreshing
-    
+  const rsvpForm = document.getElementById('rsvpForm');
+
+  rsvpForm.addEventListener('submit', function(e) {
+    e.preventDefault(); // Stops the page from refreshing
+
     const name = document.getElementById('guestName').value;
     const status = document.getElementById('attendanceStatus').value;
 
@@ -41,17 +64,19 @@
       guests: 1
     };
 
-    // 3. The "Postman" that delivers the data to Google
+    // Send data to Google Sheets
     fetch(webAppUrl, {
       method: "POST",
       mode: "no-cors",
-      cache: "no-cache",
       body: JSON.stringify(data)
-    });
-
-    alert("Thanks " + name + "! Your RSVP is recorded.");
-    document.getElementById('rsvpForm').reset(); // Clears the form
-  }
+    })
+    .then(() => {
+      alert("Thanks " + name + "! Your RSVP has been sent.");
+      rsvpForm.reset(); // Clears the form
+    })
+    .catch(err => alert("Error sending RSVP. Please try again."));
+  });
+</script>
 </script></script>
 </body>
 </html>
