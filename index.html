@@ -52,6 +52,13 @@
 
   const rsvpForm = document.getElementById('rsvpForm');
 
+  // 2. THIS IS THE DATA OBJECT (Place it here!)
+    const data = {
+        name: nameValue,
+        attendance: "Yes",
+        totalGuests: 1 // This matches the 'totalGuests' we put in your Google Script
+    };
+
   rsvpForm.addEventListener('submit', function(e) {
     e.preventDefault(); // Stops the page from refreshing
 
