@@ -1,166 +1,61 @@
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You're Invited!</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <title>Birthday Invite</title>
     <style>
-        :root {
-            --primary: #D4AF37; /* Gold */
-            --bg: #FAFAFA;
-            --text: #333;
-        }
-
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .card {
-            width: 90%;
-            max-width: 400px;
-            background: white;
-            padding: 40px 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            text-align: center;
-            border: 1px solid #f0f0f0;
-        }
-
-        h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            color: var(--primary);
-        }
-
-        .details {
-            margin: 20px 0;
-            line-height: 1.6;
-        }
-
-        .rsvp-form {
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #eee;
-        }
-
-        input, select {
-            width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box; /* Crucial for layout */
-            font-size: 16px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:active {
-            transform: scale(0.98);
-        }
-
-        .success-message {
-            display: none;
-            color: green;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-    </script>
+        body { font-family: sans-serif; text-align: center; padding: 50px; background: #f0f0f0; }
+        .card { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        input, select, button { display: block; width: 100%; margin: 10px 0; padding: 10px; }
+        button { background: #D4AF37; color: white; border: none; cursor: pointer; font-weight: bold; }
+    </style>
 </head>
 <body>
 
     <div class="card">
-        <h1>Save the Date</h1>
-        <div class="details">
-            <p><strong>Join us for a Birthday Celebration!</strong></p>
-            <p>Saturday, August 15th <br> 7:00 PM</p>
-            <p>The Grand Lounge <br> 123 Party Lane</p>
-        </div>
+        <h1>You're Invited!</h1>
+        <p>Please RSVP below:</p>
+        
+        <input type="text" id="guestName" placeholder="Your Name">
+        
+        <select id="attendance">
+            <option value="Yes">Attending</option>
+            <option value="No">Not Attending</option>
+        </select>
 
-        <div class="rsvp-form">
-            <input type="text" id="guestName" placeholder="Full Name" required>
-            
-            <select id="attendance">
-                <option value="Yes">I'm coming! 🎉</option>
-                <option value="No">Sadly, I can't 😢</option>
-            </select>
+        <select id="totalGuests">
+            <option value="1">1 Person</option>
+            <option value="2">2 People</option>
+        </select>
 
-            <select id="totalGuests">
-                <option value="1">1 Person</option>
-                <option value="2">2 People</option>
-                <option value="3">3 People</option>
-            </select>
-
-            <button type="button" id="submitBtn" onclick="sendRSVP()">Confirm RSVP</button>
-            <p id="successMsg" class="success-message">Added to the guest list!</p>
-        </div>
+        <button type="button" onclick="sendRSVP()">Confirm RSVP</button>
+        <p id="msg"></p>
     </div>
 
     <script>
         async function sendRSVP() {
-            const btn = document.getElementById('submitBtn');
-            const name = document.getElementById('guestName').value;
-            const att = document.getElementById('attendance').value;
-            const count = document.getElementById('totalGuests').value;
+            // 1. YOUR URL GOES HERE
+            const url = "PASTE_YOUR_URL_HERE"; 
             
-            // --- REPLACE THIS URL ---
-            const webAppUrl = "https://script.google.com/macros/s/AKfycbyhhZY8lZv5PBPuwNKHvYNpuDn7j1bBv7pWym_i_EyNemjN051VhHbj3BxUnSjL-LVFJw/exec"; 
-
-            if (!name) {
-                alert("Please enter your name!");
-                return;
-            }
-
-            // Visual feedback
-            btn.innerHTML = "Sending...";
-            btn.disabled = true;
+            const name = document.getElementById('guestName').value;
+            if(!name) { alert("Enter a name!"); return; }
 
             const data = {
                 name: name,
-                attendance: att,
-                totalGuests: count
+                attendance: document.getElementById('attendance').value,
+                totalGuests: document.getElementById('totalGuests').value
             };
 
-            console.log("Sending to Sheet:", data);
+            document.getElementById('msg').innerText = "Sending...";
 
             try {
-                await fetch(webAppUrl, {
+                await fetch(url, {
                     method: "POST",
                     mode: "no-cors",
                     body: JSON.stringify(data)
                 });
-
-                // Success!
-                document.getElementById('successMsg').style.display = "block";
-                btn.innerHTML = "Done!";
-                console.log("Response received (no-cors)");
-            } catch (error) {
-                console.error("Error:", error);
-                alert("Something went wrong. Check the console.");
-                btn.innerHTML = "Confirm RSVP";
-                btn.disabled = false;
+                document.getElementById('msg').innerText = "Success! Check your sheet.";
+            } catch (e) {
+                document.getElementById('msg').innerText = "Error. Check Console.";
             }
         }
     </script>
