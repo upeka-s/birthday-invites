@@ -1,85 +1,168 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spy Mission Birthday Invite</title>
-<link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You're Invited!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D4AF37; /* Gold */
+            --bg: #FAFAFA;
+            --text: #333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .card {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            padding: 40px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            border: 1px solid #f0f0f0;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .details {
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+
+        .rsvp-form {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box; /* Crucial for layout */
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .success-message {
+            display: none;
+            color: green;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </script>
 </head>
 <body>
 
-<div class="invite">
-  <h1>You’re Invited!</h1>
-  <div id="party-details">
-    <p>Date: <span id="date"></span></p>
-    <p>Time: <span id="time"></span></p>
-    <p>Location: <span id="location"></span></p>
-    <p>RSVP: <span id="rsvp"></span></p>
+    <div class="card">
+        <h1>Save the Date</h1>
+        <div class="details">
+            <p><strong>Join us for a Birthday Celebration!</strong></p>
+            <p>Saturday, August 15th <br> 7:00 PM</p>
+            <p>The Grand Lounge <br> 123 Party Lane</p>
+        </div>
 
-    <div id="rsvp-container" style="padding: 20px; text-align: center;">
-    <h2>RSVP</h2>
-    <p>Please let us know if you can make it!</p>
-    
-    <form id="rsvpForm">
-        <input type="text" id="guestName" placeholder="Your Full Name" required 
-               style="display: block; width: 80%; margin: 10px auto; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-        
-        <select id="attendanceStatus" 
-                style="display: block; width: 80%; margin: 10px auto; padding: 10px; border-radius: 5px; border: 1px solid #ccc;">
-            <option value="Yes">Yes, I'll be there! 🎉</option>
-            <option value="No">Sorry, I can't make it 😢</option>
-        </select>
+        <div class="rsvp-form">
+            <input type="text" id="guestName" placeholder="Full Name" required>
+            
+            <select id="attendance">
+                <option value="Yes">I'm coming! 🎉</option>
+                <option value="No">Sadly, I can't 😢</option>
+            </select>
 
-      <div id="rsvp-container">
-    <input type="text" id="guestName" placeholder="Your Name">
-    <button type="button" onclick="sendRSVP()">Confirm RSVP</button>
-</div>
+            <select id="totalGuests">
+                <option value="1">1 Person</option>
+                <option value="2">2 People</option>
+                <option value="3">3 People</option>
+            </select>
 
-        
-    </form>
-</div>
-  </div>
-  <button id="startBtn">Start Mission 🎮</button>
-  <div id="game" class="hidden">
-    <p id="question"></p>
-    <div id="options"></div>
-    <p id="feedback"></p>
-  </div>
-</div>
+            <button type="button" id="submitBtn" onclick="sendRSVP()">Confirm RSVP</button>
+            <p id="successMsg" class="success-message">Added to the guest list!</p>
+        </div>
+    </div>
 
-<script src="script.js"><script>
+    <script>
+        async function sendRSVP() {
+            const btn = document.getElementById('submitBtn');
+            const name = document.getElementById('guestName').value;
+            const att = document.getElementById('attendance').value;
+            const count = document.getElementById('totalGuests').value;
+            
+            // --- REPLACE THIS URL ---
+            const webAppUrl = "PASTE_YOUR_EXEC_URL_HERE"; 
 
-async function sendRSVP() {
-    console.log("CLICK DETECTED!"); // Step 1: Check if button works
+            if (!name) {
+                alert("Please enter your name!");
+                return;
+            }
 
-    const nameInput = document.getElementById('guestName');
-    const webAppUrl = "https://script.google.com/macros/s/AKfycbzV5RWRofVMkhj4aAaywQF9YwwUzwKEoUyc6ZIhOsyDTVPIJEcJD6BC8SJjddjJnlI9hw/exec"; 
+            // Visual feedback
+            btn.innerHTML = "Sending...";
+            btn.disabled = true;
 
-    if (!nameInput.value) {
-        alert("Please enter a name");
-        return;
-    }
+            const data = {
+                name: name,
+                attendance: att,
+                totalGuests: count
+            };
 
-    const data = {
-        name: nameInput.value,
-        attendance: "Yes",
-        totalGuests: 1
-    };
+            console.log("Sending to Sheet:", data);
 
-    console.log("Sending package:", data); // Step 2: Check if data is ready
+            try {
+                await fetch(webAppUrl, {
+                    method: "POST",
+                    mode: "no-cors",
+                    body: JSON.stringify(data)
+                });
 
-    try {
-        await fetch(webAppUrl, {
-            method: "POST",
-            mode: "no-cors",
-            body: JSON.stringify(data)
-        });
-        alert("RSVP Sent! Check your sheet.");
-        nameInput.value = ""; // Clear the box
-    } catch (error) {
-        console.error("Fetch Error:", error);
-    }
-}
-</script></script>
+                // Success!
+                document.getElementById('successMsg').style.display = "block";
+                btn.innerHTML = "Done!";
+                console.log("Response received (no-cors)");
+            } catch (error) {
+                console.error("Error:", error);
+                alert("Something went wrong. Check the console.");
+                btn.innerHTML = "Confirm RSVP";
+                btn.disabled = false;
+            }
+        }
+    </script>
 </body>
 </html>
